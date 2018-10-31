@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coming soon</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
+</head>
+
+<body>
+    <div class="general-container ">
+    <div class="container top-container">
+        <div class="row ">
+            <div class="center">
+                <h1 class="title">Coming soon</h1>
+                <h1 class="title">You can subscribe</h1><br>
+                 <div>
+                     <form action="" method="post" class="form-inline text-center">{%  csrf_token %}
+                     <div class="form-group">
+                         <label>  Ваш email:  </label>
+                          <input type="email" class="form-control"  placeholder="Email" name="{{ form.email.name}}" >
+                     </div>
+                     <div class="form-group">
+                         <label>  Ваше имя:  </label>
+                         <input type="text" class="form-control"  placeholder="Name" name="{{ form.name.name}}" >
+                     </div>
+                     <div>
+                        <button type="submit" class="btn brn-primary btn-orange" >Subscribe</button>
+                     </div>
+                     </form>
+                 </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

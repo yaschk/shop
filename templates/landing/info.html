@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coming soon</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static "favicon.ico" %}">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+    <style>#map {
+        padding-right: 25%;
+        height: 100%;;
+        width: 100%;
+        background-color: grey;
+    }</style>
+</head>
+<body class="Site">
+<br>
+<h3>My Google Maps Demo</h3>
+<div id="map"></div>
+    <div class="wrapper">
+
+        <div class="wrapper-content">
+            {% include 'navbar.html' %}
+
+
+    <script>
+
+    var locations = [
+        ['<h3>Graffiti market 1</h3><p><h4>вул. Антоновича 28</h4></p><p>10:00 - 18:00</p>', 50.440082, 30.515870, 'Shop №1',1],
+        ['<h3>Graffiti market 2</h3><p><h4>вул. Крива 13</h4></p><p>09:00 - 17:00</p>', 50.454664, 30.614040, 'Shop №2',2],
+        ['<h3>Graffiti market 3</h3><p><h4>вул. Ревуцького 4</h4></p><p>12:00 - 19:00</p>', 50.390791, 30.628613, 'Shop №3',3],
+        ['<h3>Graffiti market 4</h3><p><h4>вул. Садова 5</h4></p><p>11:00 - 18:00</p>', 50.400743, 30.481435, 'Shop №4',4]
+    ];
+
+
+    // When the user clicks the marker, an info window opens.
+
+    function initMap() {
+        var myLatLng = {lat:50.586397, lng:30.655160};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 12,
+            center: myLatLng
+            });
+
+        var count=0;
+
+        for (count = 0; count < locations.length; count++) {
+
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[count][1], locations[count][2]),
+                map: map,
+                title: locations [count][3],
+                icon: 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_purple'+locations[count][4]+'.png',
+                });
+
+            marker.info = new google.maps.InfoWindow({
+                content: locations [count][0]
+                });
+
+            google.maps.event.addListener(marker, 'mouseover', function() {
+
+  				this.setIcon('https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_orangeV.png');
+				});
+
+            google.maps.event.addListener(marker, 'click', function() {
+                // this = marker
+                var marker_map = this.getMap();
+                this.info.open(marker_map, this);
+                // Note: If you call open() without passing a marker, the InfoWindow will use the position specified upon construction through the InfoWindowOptions object literal.
+                });
+
+            infoWindow = new google.maps.InfoWindow;
+
+            	if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('I am here');
+            infoWindow.open(map);
+            map.setCenter(pos);
+          }, function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+          });
+        } else {
+          // Browser doesn't support Geolocation
+          handleLocationError(false, infoWindow, map.getCenter());
+        }
+
+
+        }
+
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+                              'Error: The Geolocation service failed.' :
+                              'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+      }
+
+    }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2BDdXDtFS6TSWluILM2nLGwISWoFzE34&callback=initMap">
+    </script>
+
+        </div>
+
+    </div>
+
+        {% include 'footer.html' %}
+
+</body>
+</html>
